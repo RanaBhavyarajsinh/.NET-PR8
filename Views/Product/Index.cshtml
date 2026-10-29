@@ -1,0 +1,40 @@
+﻿
+@model List<PR8.Models.Product>
+@{
+    Layout = null;
+}
+
+<h2>Inventory Management</h2>
+
+<p>@Html.ActionLink("Add New Product", "Create")</p>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductId</td>
+            <td>@item.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.Price</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit",
+                    new { id = item.ProductId })
+
+                @using (Html.BeginForm("Delete", "Product",
+                    new { id = item.ProductId }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+</table>
